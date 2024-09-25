@@ -1,7 +1,7 @@
 <?php
 require_once('./configs/DBConnection.php');
 
-class LoginModel {
+class SignupModel {
     private $dbConnection;
 
     public function __construct() {
@@ -13,6 +13,12 @@ class LoginModel {
         $stmt = $this->dbConnection->getConnection()->prepare($sql);
         $stmt->execute([$username]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function registerUser($username, $password) {
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $stmt = $this->dbConnection->getConnection()->prepare($sql);
+        return $stmt->execute([$username, $password]);
     }
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once './app/models/LoginModel.php';
+require_once('./app/models/LoginModel.php');
 
 class LoginService {
     private $loginModel;
@@ -8,18 +8,12 @@ class LoginService {
         $this->loginModel = new LoginModel();
     }
 
-    public function authenticate($username, $password) {
+    public function authenticateUser($username, $password) {
         $user = $this->loginModel->getUserByUsername($username);
-        
-        if ($user) {
-            if (password_verify($password, $user['password'])) {
-                return true;
-            } else {
-                return 'Sai mật khẩu!';
-            }
-        } else {
-            return 'Không tìm thấy người dùng!';
+        if ($user && md5($password) === $user['password']) {
+            return $user; // Trả về thông tin người dùng nếu đăng nhập thành công
         }
+        return null; // Trả về null nếu thất bại
     }
 }
-
+?>
