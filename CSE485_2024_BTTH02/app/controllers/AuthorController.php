@@ -1,3 +1,5 @@
+<!-- Trần Thị Khánh Hòa -->
+
 <?php
 require_once("./app/models/AuthorModel.php");
 require_once("./app/services/AuthorService.php");

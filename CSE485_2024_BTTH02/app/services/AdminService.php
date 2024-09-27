@@ -1,5 +1,6 @@
+
 <?php
-require_once("./configs/DBConnection.php"); // Điều chỉnh đường dẫn nếu cần
+require_once("./configs/DBConnection.php"); 
 
 require_once("./app/models/AdminModel.php");
 
@@ -7,9 +8,8 @@ class AdminService {
     private $adminModel;
 
     public function __construct() {
-        // Tạo đối tượng DBConnection
         $dbConnection = new DBConnection();
-        $this->adminModel = new AdminModel($dbConnection->getConnection()); // Truyền kết nối vào AdminModel
+        $this->adminModel = new AdminModel($dbConnection->getConnection());
     }
 
     public function getUserCount() {

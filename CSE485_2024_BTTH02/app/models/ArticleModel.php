@@ -1,24 +1,23 @@
-
 <?php
-
 class ArticleModel {
     private $tieude;
     private $tomtat;
     private $ma_tloai;
-    public $ma_bviet;
-    public $ten_bhat;
-    public $ma_tgia;
-    public $ngayviet;
+    private $ma_bviet;
+    private $ten_bhat;
+    private $ma_tgia;
+    private $ngayviet;
+    private $hinhanh;
 
-    public function __construct($tieude, $tomtat, $ma_tloai,$ma_bviet,$ten_bhat,$ma_tgia,$ngayviet) {
+    public function __construct($tieude, $tenbhat, $ma_tloai, $ma_bviet, $tomtat, $ma_tgia, $ngayviet, $hinhanh) {
         $this->tieude = $tieude;
-        $this->tomtat = $tomtat;
+        $this->ten_bhat = $tenbhat;
         $this->ma_tloai = $ma_tloai;
         $this->ma_bviet = $ma_bviet;
-        $this->ten_bhat = $ten_bhat;
+        $this->tomtat = $tomtat;
         $this->ma_tgia = $ma_tgia;
         $this->ngayviet = $ngayviet;
-
+        $this->hinhanh = $hinhanh;
     }
 
     public function getTieude() {
@@ -29,24 +28,28 @@ class ArticleModel {
         return $this->tomtat;
     }
 
-    public function getMatloai() {
+    public function getMaTloai() {
         return $this->ma_tloai;
     }
 
-    public function getMabviet() {
+    public function getMaBviet() {
         return $this->ma_bviet;
     }
 
-    public function getTenbhat() {
+    public function getTenBhat() {
         return $this->ten_bhat;
     }
 
-    public function getMatgia() {
+    public function getMaTgia() {
         return $this->ma_tgia;
     }
 
     public function getNgayviet() {
         return $this->ngayviet;
+    }
+
+    public function getHinhanh() {
+        return $this->hinhanh;
     }
 }
 ?>

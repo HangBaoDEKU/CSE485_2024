@@ -11,12 +11,27 @@
     <link rel="stylesheet" href="../../../public/css/style_login.css">
 </head>
 <body>
-
-    <?php include './app/views/layout/header_indexview.php'; ?>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Administration</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.php?controller=admin&action=index">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Trang ngoài</a></li>
+                        <li class="nav-item"><a class="nav-link active fw-bold" href="index.php?controller=category&action=index">Thể loại</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php?controller=author&action=index">Tác giả</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php?controller=article&action=index">Bài viết</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     
-
     <main class="container mt-5 mb-5">
-    <h3 class="text-center">Danh Sách Bài Viết</h3>
     <a href="index.php?controller=article&action=create" class="btn btn-success">Thêm mới</a>
 
         <table class="table">
@@ -29,6 +44,7 @@
                     <th>Tóm tắt</th>
                     <th>Mã tác giả</th>
                     <th>Ngày viết</th>
+                    <th>Hình ảnh</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -46,6 +62,12 @@
                         <td><?php echo $article->getTomtat(); ?></td>
                         <td><?php echo $article->getMatgia(); ?></td>
                         <td><?php echo $article->getNgayviet(); ?></td>
+
+                        <td>
+                            
+                        <img src="../../public/images/songs/<?php echo htmlspecialchars($article->getHinhanh()); ?>" alt="" width="100" height="100">
+                        </td>
+
                         <td><a href="?controller=article&action=edit&id=<?= $article->getMaBviet() ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
 
                         <td><a onclick="return confirm('Bạn có muốn xóa bài viết này không?');" href="index.php?controller=article&action=delete&id=<?= htmlspecialchars($article->getMabviet()) ?>"><i class="fa-solid fa-trash"></i></a></td>
@@ -60,7 +82,9 @@
         </table>
     </main>
     
-    <?php include './app/views/layout/footer_indexview.php'; ?>
+    <footer class="bg-white d-flex justify-content-center align-items-center border-top border-secondary border-2" style="height:80px">
+        <h4 class="text-center text-uppercase fw-bold">TLU's music garden</h4>
+    </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

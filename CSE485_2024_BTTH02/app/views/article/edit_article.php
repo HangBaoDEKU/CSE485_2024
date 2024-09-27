@@ -29,14 +29,14 @@
     
     <main class="container mt-4">
         <h2 class="mb-4">Chỉnh sửa bài viết</h2>
-        <form method="POST" action="?controller=article&action=update">
+        <form method="POST" action="?controller=article&action=update" enctype="multipart/form-data">
             <input type="hidden" name="mabviet" value="<?= $article->getMaBviet() ?>">
             <div class="mb-3">
                 <label for="tieude" class="form-label">Tiêu đề:</label>
                 <input type="text" class="form-control" id="tieude" name="tieude" value="<?= htmlspecialchars($article->getTieude()) ?>" required>
             </div>
             <div class="mb-3">
-                <label for="tenbhat" class="form-label">Tên tác giả:</label>
+                <label for="tenbhat" class="form-label">Tên bài hát:</label>
                 <input type="text" class="form-control" id="tenbhat" name="tenbhat" value="<?= htmlspecialchars($article->getTenBhat()) ?>" required>
             </div>
             <div class="mb-3">
@@ -53,10 +53,20 @@
             </div>
             <div class="mb-3">
                 <label for="ngayviet" class="form-label">Ngày viết:</label>
-                <input type="date" class="form-control" id="ngayviet" name="ngayviet" 
-       value="<?= htmlspecialchars(date('Y-m-d', strtotime($article->getNgayviet()))) ?>" required>
-
+                <input type="date" class="form-control" id="ngayviet" name="ngayviet" value="<?= htmlspecialchars(date('Y-m-d', strtotime($article->getNgayviet()))) ?>" required>
             </div>
+
+            <div class="mb-3">
+                <label for="hinhanh" class="form-label">Hình ảnh:</label>
+                <?php if (!empty($article->getHinhanh())): ?>
+                    <div>
+                        <img src="public/images/songs/<?= htmlspecialchars($article->getHinhanh()) ?>" alt="Current Image" style="max-width: 200px;">
+                        <p>Hình ảnh hiện tại: <?= htmlspecialchars($article->getHinhanh()) ?></p>
+                    </div>
+                <?php endif; ?>
+                <input type="file" class="form-control" id="hinhanh" name="hinhanh">
+            </div>
+
             <button type="submit" class="btn btn-primary">Cập nhật</button>
             <a href="?controller=article&action=index" class="btn btn-secondary">Quay lại</a>
         </form>

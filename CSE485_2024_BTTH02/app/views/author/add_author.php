@@ -31,7 +31,7 @@
 
     <main class="container mt-5 mb-5">
         <h3 class="text-center text-uppercase fw-bold">Thêm mới tác giả</h3>
-        <form action="index.php?controller=author&action=create" method="post">
+        <form action="index.php?controller=author&action=create" method="post" enctype="multipart/form-data>
             <div class="input-group mt-3 mb-3">
                 <span class="input-group-text">Tên tác giả</span>
                 <input type="text" class="form-control" name="tentgia" required>

@@ -1,3 +1,5 @@
+<!-- Vũ Hoài Liên -->
+
 <?php
 require_once('./app/services/LoginService.php');
 
@@ -24,7 +26,7 @@ class LoginController {
                     $_SESSION['user'] = $user['username']; 
 
                     // Thông báo và điều hướng
-                    echo "<script>alert('Đăng nhập thành công!'); window.location.href = 'index.php';</script>";
+                    echo "<script>alert('Đăng nhập thành công!'); window.location.href = 'index.php?controller=admin&action=index';</script>";
                 } else {
                     echo "<script>alert('Sai tên người dùng hoặc mật khẩu!');window.location.href = 'index.php?controller=login&action=login';</script>";
                 }

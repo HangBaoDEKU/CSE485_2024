@@ -10,7 +10,7 @@ class ArticleService {
     }
 
     public function getAllArticles() {
-        $sql = "SELECT ma_bviet, tieude, ten_bhat, ma_tloai, tomtat, ma_tgia, ngayviet FROM baiviet";
+        $sql = "SELECT ma_bviet, tieude, ten_bhat, ma_tloai, tomtat, ma_tgia, ngayviet, hinhanh FROM baiviet";
         $stmt = $this->dbConnection->getConnection()->query($sql);
 
         $articles = [];
@@ -22,59 +22,22 @@ class ArticleService {
                 $row['ma_bviet'],
                 $row['tomtat'],
                 $row['ma_tgia'],
-                $row['ngayviet']
+                $row['ngayviet'],
+                $row['hinhanh']
             );
             $articles[] = $article;
         }
         return $articles;
     }
 
-    public function addArticle($tieude, $tenbhat, $matloai, $tomtat, $matgia, $ngayviet) {
-        $themsql = "INSERT INTO baiviet (tieude, ten_bhat, ma_tloai, tomtat, ma_tgia, ngayviet) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->dbConnection->getConnection()->prepare($themsql);
-        return $stmt->execute([$tieude, $tenbhat, $matloai, $tomtat, $matgia, $ngayviet]);
-    }
-
-    public function getArticleById($id) {
-        $sql = "SELECT * FROM baiviet WHERE ma_bviet = ?";
+    public function addArticle($tieude, $tenbhat, $matloai, $tomtat, $matgia, $ngayviet, $hinhanh) {
+        $sql = "INSERT INTO baiviet (tieude, ten_bhat, ma_tloai, tomtat, ma_tgia, ngayviet, hinhanh) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->dbConnection->getConnection()->prepare($sql);
-        $stmt->execute([$id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($row) {
-            return new ArticleModel(
-                $row['tieude'],
-                $row['ten_bhat'],
-                $row['ma_tloai'],
-                $row['ma_bviet'],
-                $row['tomtat'],
-                $row['ma_tgia'],
-                $row['ngayviet']
-            );
-        }
-
-        return null; // Nếu không tìm thấy
+        return $stmt->execute([$tieude, $tenbhat, $matloai, $tomtat, $matgia, $ngayviet, $hinhanh]);
     }
-
-    // Kiểm tra xem mã thể loại có tồn tại trong cơ sở dữ liệu không
-    public function checkCategoryExists($matloai) {
-        $sql = "SELECT COUNT(*) FROM theloai WHERE ma_tloai = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($sql);
-        $stmt->execute([$matloai]);
-        return $stmt->fetchColumn() > 0;
-    }
-
-    // Kiểm tra xem mã tác giả có tồn tại trong cơ sở dữ liệu không
-    public function checkAuthorExists($matgia) {
-        $sql = "SELECT COUNT(*) FROM tacgia WHERE ma_tgia = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($sql);
-        $stmt->execute([$matgia]);
-        return $stmt->fetchColumn() > 0;
-    }
-
 
     public function updateArticle(ArticleModel $article) {
-        $sql = "UPDATE baiviet SET tieude = ?, ten_bhat = ?, ma_tloai = ?, tomtat = ?, ma_tgia = ?, ngayviet = ? WHERE ma_bviet = ?";
+        $sql = "UPDATE baiviet SET tieude = ?, ten_bhat = ?, ma_tloai = ?, tomtat = ?, ma_tgia = ?, ngayviet = ?, hinhanh = ? WHERE ma_bviet = ?";
         $stmt = $this->dbConnection->getConnection()->prepare($sql);
         return $stmt->execute([
             $article->getTieude(),
@@ -83,18 +46,49 @@ class ArticleService {
             $article->getTomtat(),
             $article->getMaTgia(),
             $article->getNgayviet(),
+            $article->getHinhanh(),
             $article->getMaBviet()
         ]);
     }
 
-    // app/services/ArticleService.php
-
     public function deleteArticle($id) {
-        $delete_sql = "DELETE FROM baiviet WHERE ma_bviet = ?";
-        $stmt = $this->dbConnection->getConnection()->prepare($delete_sql);
+        $sql = "DELETE FROM baiviet WHERE ma_bviet = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($sql);
         return $stmt->execute([$id]);
     }
-    
 
+    public function getArticleById($id) {
+        $sql = "SELECT * FROM baiviet WHERE ma_bviet = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($sql);
+        $stmt->execute([$id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $row ? new ArticleModel(
+            $row['tieude'],
+            $row['ten_bhat'],
+            $row['ma_tloai'],
+            $row['ma_bviet'],
+            $row['tomtat'],
+            $row['ma_tgia'],
+            $row['ngayviet'],
+            $row['hinhanh']
+        ) : null;
+    }
+
+    public function checkCategoryExists($matloai) {
+        // Kiểm tra sự tồn tại của mã thể loại
+        $sql = "SELECT COUNT(*) FROM theloai WHERE ma_tloai = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($sql);
+        $stmt->execute([$matloai]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function checkAuthorExists($matgia) {
+        // Kiểm tra sự tồn tại của mã tác giả
+        $sql = "SELECT COUNT(*) FROM tacgia WHERE ma_tgia = ?";
+        $stmt = $this->dbConnection->getConnection()->prepare($sql);
+        $stmt->execute([$matgia]);
+        return $stmt->fetchColumn() > 0;
+    }
 }
 ?>
