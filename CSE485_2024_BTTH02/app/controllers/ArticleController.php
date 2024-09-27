@@ -28,6 +28,7 @@ public function create() {
         $tomtat = $_POST['tomtat'] ?? null;
         $matgia = $_POST['matgia'] ?? null;
         $ngayviet = $_POST['ngayviet'] ?? null;
+        
 
         // Kiểm tra dữ liệu
         if ($matloai == null || $matgia == null) {

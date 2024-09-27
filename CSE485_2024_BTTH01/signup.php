@@ -99,13 +99,13 @@
         if($password != $repassword){    //Kiểm tra xem nhập lại mật khẩu có trùng với mật khẩu hay không
             ?>
             <script>alert("Mật khẩu không trùng mời kiểm tra lại");
-            window.location.href="http://localhost:8888/signup.php";</script>
+            window.location.href="/signup.php";</script>
             <?php
         }
         else if(strlen($password)<7){
             ?>
             <script>alert("Mật khẩu quá ngắn. Mật khẩu phải trên 8 kí tự");
-            window.location.href="http://localhost:8888/signup.php";</script>
+            window.location.href="/signup.php";</script>
             <?php
 
         }
@@ -117,7 +117,7 @@
             if( mysqli_num_rows($old) > 0){
                 ?>
                 <script>alert("username này đã tồn tại");
-                window.location.href="http://localhost:8888/signup.php";</script>
+                window.location.href="/signup.php";</script>
                 <?php
             }
             else{
@@ -125,7 +125,7 @@
                 mysqli_query($conn,$sql);
                 ?>
                 <script>alert("Thêm thành công tài khoản cho nhân viên");
-                window.location.href="http://localhost:8888/signup.php";</script>
+                window.location.href="/signup.php";</script>
                 <?php
             }
 
@@ -133,5 +133,6 @@
     
     }
 ?>
+
 </body>
 </html>

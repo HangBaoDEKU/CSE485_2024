@@ -1,4 +1,3 @@
-
 <?php
 include '../connect.php';
 $matloai = $_GET['id'];

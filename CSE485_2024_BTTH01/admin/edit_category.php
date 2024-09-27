@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
-    <header>
     <?php
         include '../connect.php';
         $matloai = $_GET['id'];
@@ -18,6 +17,7 @@
         $result = mysqli_query($conn, $edit_sql);
         $row = mysqli_fetch_assoc($result);
     ?>
+        <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
             <div class="container-fluid">
                 <div class="h3">
@@ -54,15 +54,16 @@
         <div class="row">
             <div class="col-sm">
                 <h3 class="text-center text-uppercase fw-bold">Sửa thông tin thể loại</h3>
-                <form action="process_add_category.php" method="post">
+                <form action="update_edit_category.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $id;?>" id="" >    
                 <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatId">Mã thể loại</span>
-                        <input type="text" class="form-control" name="txtCatId" readonly value="1">
+                        <input type="text" class="form-control" name="matloai" readonly value="<?php echo $row['ma_tloai']?>">
                     </div>
 
                     <div class="input-group mt-3 mb-3">
                         <span class="input-group-text" id="lblCatName">Tên thể loại</span>
-                        <input type="text" class="form-control" name="txtCatName" value = "Nhạc trữ tình">
+                        <input type="text" class="form-control" name="tentloai" value = "<?php echo $row['ten_tloai']?>">
                     </div>
 
                     <div class="form-group  float-end ">

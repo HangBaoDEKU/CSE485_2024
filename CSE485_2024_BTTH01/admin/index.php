@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
-<?php
+    <?php
         include '../connect.php'; // Kết nối CSDL
 
         // Đếm số lượng thể loại
@@ -77,7 +77,9 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            110
+                            <?php
+                                echo $count_users;
+                            ?>
                         </h5>
                     </div>
                 </div>
@@ -91,7 +93,9 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            10
+                            <?php
+                                echo $count_theloai;
+                            ?>
                         </h5>
                     </div>
                 </div>
@@ -105,7 +109,9 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            20
+                            <?php
+                                echo $count_tacgia;
+                            ?>
                         </h5>
                     </div>
                 </div>
@@ -119,7 +125,9 @@
                         </h5>
 
                         <h5 class="h1 text-center">
-                            110
+                            <?php
+                                echo $count_baiviet;
+                            ?>
                         </h5>
                     </div>
                 </div>

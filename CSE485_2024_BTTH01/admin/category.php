@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
+
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
             <div class="container-fluid">
@@ -57,26 +58,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Nhạc trữ tình</td>
-                            <td>
-                                <a href="edit_category.php?id=1"><i class="fa-solid fa-pen-to-square"></i></a>
-                            </td>
-                            <td>
-                                <a href=""><i class="fa-solid fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Nhạc cách mạng</td>
-                            <td>
-                                <a href="edit_category.php?id=2"><i class="fa-solid fa-pen-to-square"></i></a>
-                            </td>
-                            <td>
-                                <a href=""><i class="fa-solid fa-trash"></i></a>
-                            </td>
-                        </tr>
+                        <?php 
+                            include '../connect.php'; // Kết nối CSDL
+                            $sql = "SELECT ma_tloai, ten_tloai FROM theloai";
+                            $result = $conn->query($sql);
+                        
+                          if ($result->num_rows > 0) {
+                            // Hiển thị thể loại
+                            while($row = $result->fetch_assoc()) {                         
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $row['ma_tloai'];?></th>
+                                <td><?php echo $row['ten_tloai'];?></td>
+                                <td>
+                                    <a href="edit_category.php?id=<?php echo $row['ma_tloai'];?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                                <td>
+                                    <a onclick="return confirm('Bạn có muốn xóa thể loại này không ?');" href="delete_category.php?id=<?php echo $row['ma_tloai'];?>"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <?php
+                            
+                            }
+
+                        } else {
+                            echo "Không có thể loại nào.";
+                        }
+                        ?>
                        
                     </tbody>
                 </table>

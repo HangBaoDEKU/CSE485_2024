@@ -11,9 +11,9 @@ class LoginService {
     public function authenticateUser($username, $password) {
         $user = $this->loginModel->getUserByUsername($username);
         if ($user && md5($password) === $user['password']) {
-            return $user; // Trả về thông tin người dùng nếu đăng nhập thành công
+            return $user; 
         }
-        return null; // Trả về null nếu thất bại
+        return null; 
     }
 }
 ?>

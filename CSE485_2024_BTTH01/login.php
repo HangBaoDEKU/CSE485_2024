@@ -10,35 +10,69 @@
     <link rel="stylesheet" href="css/style_login.css">
 </head>
 <body>
+ 
+    <!-- Cách thầy -->
     <?php
-        include 'connect.php';
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        include 'connect.php'; // Kết nối CSDL
+
+        if (isset($_POST['submit']) && !empty($_POST['username']) && !empty($_POST['password'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $password = md5($password); 
-            $sql = "SELECT * FROM users WHERE username = ?";
+            $hashed_password = md5($password);
+
+            $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $username);
+            $stmt->bind_param("ss", $username, $hashed_password);
             $stmt->execute();
             $result = $stmt->get_result();
+
             if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                // So sánh mật khẩu (đã được mã hóa)
-                if (password_verify($password, $user['password'])) {
-                    echo "<script>alert('Đăng nhập thành công!');</script>";
-                } else {
-                    echo "<script>alert('Sai mật khẩu!');</script>";
-                }
+                ?>
+                <script>
+                    alert("Bạn đã đăng nhập thành công");
+                </script>
+                <?php
             } else {
-                echo "<script>alert('Không tìm thấy người dùng!');</script>";
+                ?>
+                <script>
+                    alert("Mời kiểm tra lại tài khoản hoặc mật khẩu");
+                </script>
+                <?php
             }
-        
             $stmt->close();
         }
-        
+
         $conn->close();
 
+
+        // Cách 2:
+            /*
+                include 'connect.php';
+                if(isset($_POST['submit']) && $_POST["username"] != '' && $_POST["password"] != '' ){
+
+                    $username = $_POST["username"];
+                    $password = $_POST["password"];
+                    $password = md5($password); 
+
+                    $sql = "SELECT * FROM users WHERE username='$username' AND password= '$password' ";
+                    $user = mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($user) > 0){
+                        ?>
+                        <script>alert("Bạn đã đăng nhập thành công");
+                        // window.location.href="";</script>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <script>alert("Mời kiểm tra lại tài khoản hoặc mật khẩu");
+                        // window.location.href="";</script>
+                        <?php
+                    }
+
+                }
+            */
     ?>
+
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 bg-white rounded">
             <div class="container-fluid">
@@ -81,28 +115,28 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="login.php" method="post">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtUser"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" placeholder="username" >
+                                <input type="username" name="username" id="username" class="form-control" placeholder="username" >
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="txtPass"><i class="fas fa-key"></i></span>
-                                <input type="text" class="form-control" placeholder="password" >
+                                <input type="password" name="password" id="password" class="form-control" placeholder="password" >
                             </div>
                             
                             <div class="row align-items-center remember">
                                 <input type="checkbox">Remember Me
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Login" class="btn float-end login_btn">
+                                <input type="submit" name="submit" value="Login" class="btn float-end login_btn">
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-center ">
-                            Don't have an account?<a href="#" class="text-warning text-decoration-none">Sign Up</a>
+                            Don't have an account?<a href="./signup.php" class="text-warning text-decoration-none">Sign Up</a>
                         </div>
                         <div class="d-flex justify-content-center">
                             <a href="#" class="text-warning text-decoration-none">Forgot your password?</a>
